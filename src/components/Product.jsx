@@ -11,10 +11,9 @@ const Product = () => {
   const [isLoading, setIsLoading] = useState(true);
   const fetchProduct = async () => {
     try {
-      const response = await productsApi.show(
-        "https://smile-cart-backend-staging.neetodeployapp.com/products/infinix-inbook-2"
-      );
-      setProduct(response.data);
+      const product = await productsApi.show();
+      setProduct(product);
+      console.log(product);
     } catch (error) {
       console.log("An error occurred: ", error);
     } finally {
@@ -26,9 +25,8 @@ const Product = () => {
     fetchProduct();
   }, []);
 
-  const { name, description, mrp, offer_price, image_urls, image_url } =
-    product;
-  const totalDiscounts = mrp - offer_price;
+  const { name, description, mrp, offerPrice, imageUrls, imageUrl } = product;
+  const totalDiscounts = mrp - offerPrice;
   const discountPercentage = ((totalDiscounts / mrp) * 100).toFixed(1);
 
   if (isLoading) {
@@ -49,13 +47,10 @@ const Product = () => {
       <div className="mt-16 flex gap-4">
         <div className="w-2/5">
           <div className="flex justify-center gap-16">
-            {isNotNil(image_urls) ? (
-              <Carousel
-                imageUrls={append(image_url, image_urls)}
-                title={name}
-              />
+            {isNotNil(imageUrls) ? (
+              <Carousel imageUrls={append(imageUrl, imageUrls)} title={name} />
             ) : (
-              <img alt={name} className="w-48" src={image_url} />
+              <img alt={name} className="w-48" src={imageUrl} />
             )}
           </div>
         </div>
@@ -63,7 +58,7 @@ const Product = () => {
           <Typography>{description}</Typography>
           <Typography>MRP: {mrp}</Typography>
           <Typography className="font-semibold">
-            Offer Price: {offer_price}
+            Offer Price: {offerPrice}
           </Typography>
           <Typography className="font-semibold text-green-600">
             {discountPercentage}% off
