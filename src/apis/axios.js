@@ -3,7 +3,6 @@ import { keysToCamelCase } from "neetocist";
 
 const transformResponseKeysToCamelCase = response => {
   if (response) response = keysToCamelCase(response);
-  console.log("Data in camel case", response);
 
   return response;
 };

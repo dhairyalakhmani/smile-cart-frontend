@@ -3,17 +3,18 @@ import { useEffect, useState } from "react";
 import productsApi from "apis/products";
 import { Typography, Spinner } from "neetoui";
 import { append, isNotNil } from "ramda";
+import { useParams } from "react-router-dom";
 
 import Carousel from "./Carousel";
 
 const Product = () => {
+  const { slug } = useParams();
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const fetchProduct = async () => {
     try {
-      const product = await productsApi.show();
-      setProduct(product);
-      console.log(product);
+      const response = await productsApi.show(slug);
+      setProduct(response);
     } catch (error) {
       console.log("An error occurred: ", error);
     } finally {
@@ -23,7 +24,7 @@ const Product = () => {
 
   useEffect(() => {
     fetchProduct();
-  }, []);
+  }, [slug]);
 
   const { name, description, mrp, offerPrice, imageUrls, imageUrl } = product;
   const totalDiscounts = mrp - offerPrice;
