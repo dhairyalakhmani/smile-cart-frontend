@@ -8,6 +8,8 @@ import { useParams } from "react-router-dom";
 
 import Carousel from "./Carousel";
 
+import AddToCart from "../commons/AddToCart";
+
 const Product = () => {
   const [isError, setIsError] = useState(false);
   const { slug } = useParams();
@@ -61,6 +63,7 @@ const Product = () => {
           <Typography className="font-semibold text-green-600">
             {discountPercentage}% off
           </Typography>
+          <AddToCart {...{ slug }} />
         </div>
       </div>
     </>
