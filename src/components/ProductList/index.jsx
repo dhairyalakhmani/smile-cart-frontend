@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import productsApi from "apis/products";
 import { Header, PageLoader } from "components/commons";
+import useDebounce from "hooks/useDebounce";
 import { Search } from "neetoicons";
 import { Input, NoData } from "neetoui";
 import { isEmpty } from "ramda";
@@ -12,11 +13,12 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchKey, setSearchKey] = useState("");
+  const debounceSearchKey = useDebounce(searchKey);
 
   const fetchProducts = async () => {
     try {
       setIsLoading(true);
-      const data = await productsApi.fetch({ searchTerm: searchKey });
+      const data = await productsApi.fetch({ searchTerm: debounceSearchKey });
       setProducts(data.products);
     } catch (error) {
       console.log("An error occurred:", error);
@@ -27,7 +29,7 @@ const ProductList = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [searchKey]);
+  }, [debounceSearchKey]);
 
   return (
     <div className="flex h-screen flex-col">
@@ -41,7 +43,6 @@ const ProductList = () => {
             type="search"
             value={searchKey}
             onChange={event => {
-              console.log("RE-RENDERING");
               setSearchKey(event.target.value);
             }}
           />
