@@ -1,4 +1,6 @@
 const routes = {
+  cart: "/cart",
+  checkout: "/checkout",
   root: "/",
   products: {
     index: "/products",
