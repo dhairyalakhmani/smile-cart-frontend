@@ -12,12 +12,13 @@ import PriceCard from "./PriceCard";
 import ProductCard from "./ProductCard";
 
 const Cart = () => {
-  const { cartItems, setSelectedQuantity } = useCartItemsStore();
+  const { cartItems, setSelectedQuantity } = useCartItemsStore.pick();
   const slugs = keys(cartItems);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const totalMrp = cartTotalOf(products, MRP);
   const totalOfferPrice = cartTotalOf(products, OFFER_PRICE);
+
   const fetchCartProducts = async () => {
     try {
       const responses = await Promise.all(
