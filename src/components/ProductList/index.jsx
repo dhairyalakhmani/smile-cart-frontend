@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import productsApi from "apis/products";
 import { Header, PageLoader } from "components/commons";
+import EmptyCartIcon from "components/commons/EmptyCartIcon";
 import useDebounce from "hooks/useDebounce";
 import { Search } from "neetoicons";
 import { Input, NoData } from "neetoui";
@@ -52,7 +53,10 @@ const ProductList = () => {
       {isLoading ? (
         <PageLoader />
       ) : isEmpty(products) ? (
-        <NoData className="h-full w-full" title="No products to show" />
+        <div className="flex flex-grow flex-col items-center justify-center space-y-4">
+          <EmptyCartIcon />
+          <NoData title="We don't have any products matching that search right now. Browse our categories to see what's new." />
+        </div>
       ) : (
         <div className="grid grid-cols-2 justify-items-center gap-y-8 p-4 md:grid-cols-3 lg:grid-cols-4">
           {products.map(product => (

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import productsApi from "apis/products";
 import { Header, PageLoader } from "components/commons";
+import EmptyCartIcon from "components/commons/EmptyCartIcon";
 import { MRP, OFFER_PRICE } from "components/constants";
 import { cartTotalOf } from "components/utils";
 import { NoData, Toastr } from "neetoui";
@@ -51,14 +52,19 @@ const Cart = () => {
     fetchCartProducts();
   }, [cartItems]);
 
+  useEffect(() => {
+    document.title = "My Cart Test";
+  }, []);
+
   if (isLoading) return <PageLoader />;
 
   if (isEmpty(products)) {
     return (
       <>
         <Header title="My Cart" />
-        <div className="flex h-screen items-center justify-center">
-          <NoData title="Your Cart is Empty..." />
+        <div className="flex h-screen flex-col items-center justify-center py-0">
+          <EmptyCartIcon />
+          <NoData title="Your cart is currently empty. Explore our catalog and find something you'll love!" />
         </div>
       </>
     );
