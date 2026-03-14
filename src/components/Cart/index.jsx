@@ -7,6 +7,7 @@ import { cartTotalOf } from "components/utils";
 import { NoData, Toastr } from "neetoui";
 import { isEmpty, keys } from "ramda";
 import useCartItemsStore from "stores/useCartItemsStore";
+import withTitle from "utils/withTitle";
 
 import PriceCard from "./PriceCard";
 import ProductCard from "./ProductCard";
@@ -82,4 +83,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default withTitle(Cart, "My Cart");
